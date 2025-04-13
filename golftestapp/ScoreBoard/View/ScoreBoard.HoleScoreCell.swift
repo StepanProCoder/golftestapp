@@ -1,13 +1,6 @@
-//
-//  HoleScoreCell.swift
-//  golftestapp
-//
-//  Created by Степан Тлеубаев  on 12.04.2025.
-//
-
 import UIKit
 
-class HoleScoreCell: UITableViewCell {
+public class ScoreBoardHoleScoreCell: UITableViewCell {
     
     private let holeLabel = UILabel()
     private let playersStack = UIStackView()

@@ -6,9 +6,31 @@
 //
 
 extension SkinsCounter.Presenter: SkinsCounter.IViewHandler {
+    public var skinsCounterViewHandlerHoleNumber: Int {
+        guard let hole = delegate?.skinsCounterCalculatorDelegateHoleNumber,
+                hole <= 18
+        else { return 18 }
+        return hole
+    }
+    public var skinsCounterViewHandlerStrokeCount: Int {
+        delegate?.skinsCounterCalculatorDelegateStrokeCount ?? 0
+    }
+    public var skinsCounterViewHandlerSkinsCount: Int {
+        delegate?.skinsCounterCalculatorDelegateSkinsCount ?? 0
+    }
+    
+    public func skinsCounterViewHandlerOnViewDidload() {
+        router?.skinsCounterRouterPresentScoreBoard()
+    }
+    
+    public func skinsCounterViewHandlerOnNewStroke(value: Int) {
+        delegate?.skinsCounterCalculatorDelegateStrokeCount = value
+    }
+    
     public func skinsCounterViewHandlerOnNextHoleTapped() {
-        skinsCounterViewHandlerHoleNumber += 1
-        skinsCounterViewHandlerStrokeCount = 0
-        skinsCounterViewHandlerSkinsCount = delegate?.skinsCounterCalculatorDelegateComputeSkins() ?? 0
+        guard delegate?.skinsCounterCalculatorDelegateHoleNumber ?? 0 <= 18 else { return }
+        delegate?.skinsCounterCalculatorDelegateHoleNumber += 1
+        delegate?.skinsCounterCalculatorDelegateStrokeCount = 0
+        router?.skinsCounterRouterExtendScoreBoard()
     }
 }

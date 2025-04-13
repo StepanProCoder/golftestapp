@@ -6,7 +6,7 @@
 //
 
 public protocol SkinsCounterCalculatorDelegate {
-    func skinsCounterCalculatorDelegateComputeSkins() -> Int
-    func skinsCounterCalculatorDelegateOnNewHole(hole: Int)
-    func skinsCounterCalculatorDelegateOnNewStroke(stroke: Int)
+    var skinsCounterCalculatorDelegateHoleNumber: Int { get set }
+    var skinsCounterCalculatorDelegateStrokeCount: Int { get set }
+    var skinsCounterCalculatorDelegateSkinsCount: Int { get }
 }

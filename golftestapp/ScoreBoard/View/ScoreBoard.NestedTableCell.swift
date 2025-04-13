@@ -1,6 +1,6 @@
 import UIKit
 
-class NestedTableCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
+public class ScoreBoardNestedTableCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
 
     private var leaderboardEntries: [SkinsTableEntry] = []
     private var holeScores: [HoleScore] = []
@@ -19,8 +19,8 @@ class NestedTableCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
         innerTableView.translatesAutoresizingMaskIntoConstraints = false
         innerTableView.backgroundColor = .systemBackground
 
-        innerTableView.register(SkinsLeaderboardCell.self, forCellReuseIdentifier: "SkinsLeaderboardCell")
-        innerTableView.register(HoleScoreCell.self, forCellReuseIdentifier: "HoleScoreCell")
+        innerTableView.register(ScoreBoardSkinsLeaderBoardCell.self, forCellReuseIdentifier: "SkinsLeaderboardCell")
+        innerTableView.register(ScoreBoardHoleScoreCell.self, forCellReuseIdentifier: "HoleScoreCell")
 
         contentView.addSubview(innerTableView)
 
@@ -50,23 +50,25 @@ class NestedTableCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
         innerTableView.reloadData()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return leaderboardEntries.isEmpty ? 124.0 : 44.0
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return leaderboardEntries.isEmpty ? 164.0 : 44.0
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return leaderboardEntries.isEmpty ? holeScores.count : leaderboardEntries.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if !leaderboardEntries.isEmpty {
             let entry = leaderboardEntries[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SkinsLeaderboardCell", for: indexPath) as! SkinsLeaderboardCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "SkinsLeaderboardCell", for: indexPath) as? ScoreBoardSkinsLeaderBoardCell
+            else { return UITableViewCell() }
             cell.configure(with: entry, isWinner: winner?.playerName == entry.playerName)
             return cell
         } else {
             let score = holeScores[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "HoleScoreCell", for: indexPath) as! HoleScoreCell
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "HoleScoreCell", for: indexPath) as? ScoreBoardHoleScoreCell
+            else { return UITableViewCell() }
             cell.configure(with: score)
             return cell
         }

@@ -1,6 +1,6 @@
 import UIKit
 
-class SkinsLeaderboardCell: UITableViewCell {
+public class ScoreBoardSkinsLeaderBoardCell: UITableViewCell {
     
     private let playerNameLabel = UILabel()
     private let skinsLabel = UILabel()
@@ -23,7 +23,7 @@ class SkinsLeaderboardCell: UITableViewCell {
         if isWinner {
             contentView.backgroundColor = .systemGreen.withAlphaComponent(0.2)
             playerNameLabel.textColor = .systemGreen
-            addPulseAnimation() // Добавляем пульсацию для победителя
+            addPulseAnimation() 
         } else {
             contentView.backgroundColor = .white
             playerNameLabel.textColor = .label
@@ -74,7 +74,6 @@ class SkinsLeaderboardCell: UITableViewCell {
         ])
     }
     
-    // Анимация пульсации
     private func addPulseAnimation() {
         let pulse = CABasicAnimation(keyPath: "transform.scale")
         pulse.fromValue = 1.0

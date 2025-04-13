@@ -14,6 +14,7 @@ public class SkinsCounterViewController: UIViewController, UIPickerViewDataSourc
         super.viewDidLoad()
         view.backgroundColor = UIColor.systemBackground
         setupUI()
+        handler?.skinsCounterViewHandlerOnViewDidload()
     }
 
     private func setupUI() {
@@ -92,7 +93,7 @@ public class SkinsCounterViewController: UIViewController, UIPickerViewDataSourc
     }
 
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 20
+        return 100
     }
 
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -100,7 +101,7 @@ public class SkinsCounterViewController: UIViewController, UIPickerViewDataSourc
     }
 
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        handler?.skinsCounterViewHandlerStrokeCount = row
+        handler?.skinsCounterViewHandlerOnNewStroke(value: row)
     }
 
     // MARK: - Actions

@@ -1,14 +1,10 @@
-//
-//  SkinsCounter.IViewHandler.swift
-//  golftestapp
-//
-//  Created by Степан Тлеубаев  on 12.04.2025.
-//
 
 public protocol ISkinsCounterViewHandler {
     var skinsCounterViewHandlerHoleNumber: Int { get }
     var skinsCounterViewHandlerSkinsCount: Int { get }
-    var skinsCounterViewHandlerStrokeCount: Int { get set }
+    var skinsCounterViewHandlerStrokeCount: Int { get }
     
+    func skinsCounterViewHandlerOnViewDidload()
     func skinsCounterViewHandlerOnNextHoleTapped()
+    func skinsCounterViewHandlerOnNewStroke(value: Int)
 }

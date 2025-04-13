@@ -1,11 +1,4 @@
-//
-//  HoleScore.swift
-//  golftestapp
-//
-//  Created by Степан Тлеубаев  on 12.04.2025.
-//
-
-struct HoleScore {
+public struct HoleScore {
     let holeNumber: Int
     let playerScores: [PlayerScore]
     let skinOwner: String?
