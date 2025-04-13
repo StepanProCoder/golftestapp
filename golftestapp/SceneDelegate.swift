@@ -8,7 +8,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = UINavigationController(rootViewController: SkinsCounter.Builder().build())
+        window.rootViewController = PortraitNavigationController(rootViewController: SkinsCounter.Builder().build())
         window.makeKeyAndVisible()
         self.window = window
     }
