@@ -33,4 +33,8 @@ extension SkinsCounter.Presenter: SkinsCounter.IViewHandler {
         delegate?.skinsCounterCalculatorDelegateStrokeCount = 0
         router?.skinsCounterRouterExtendScoreBoard()
     }
+    
+    public func skinsCounterViewHandlerOnResetTapped() {
+        delegate?.skinsCounterCalculatorDelegateOnResetSession()
+    }
 }

@@ -9,4 +9,6 @@ public protocol SkinsCounterCalculatorDelegate {
     var skinsCounterCalculatorDelegateHoleNumber: Int { get set }
     var skinsCounterCalculatorDelegateStrokeCount: Int { get set }
     var skinsCounterCalculatorDelegateSkinsCount: Int { get }
+    
+    func skinsCounterCalculatorDelegateOnResetSession()
 }

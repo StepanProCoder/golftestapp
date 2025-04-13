@@ -6,5 +6,6 @@ public protocol ISkinsCounterViewHandler {
     
     func skinsCounterViewHandlerOnViewDidload()
     func skinsCounterViewHandlerOnNextHoleTapped()
+    func skinsCounterViewHandlerOnResetTapped()
     func skinsCounterViewHandlerOnNewStroke(value: Int)
 }

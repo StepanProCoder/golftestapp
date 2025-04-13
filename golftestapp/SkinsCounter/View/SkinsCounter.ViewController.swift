@@ -9,6 +9,7 @@ public class SkinsCounterViewController: UIViewController, UIPickerViewDataSourc
     private let pickerView = UIPickerView()
     private let skinsLabel = UILabel()
     private let nextHoleButton = UIButton(type: .system)
+    private let resetButton = UIButton(type: .system)
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,14 +50,16 @@ public class SkinsCounterViewController: UIViewController, UIPickerViewDataSourc
         nextHoleButton.layer.cornerRadius = 14
         nextHoleButton.clipsToBounds = true
         nextHoleButton.addTarget(self, action: #selector(nextHoleTapped), for: .touchUpInside)
+        
+        resetButton.setTitle("Reset", for: .normal)
+        resetButton.setTitleColor(.white, for: .normal)
+        resetButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        resetButton.layer.cornerRadius = 14
+        resetButton.clipsToBounds = true
+        resetButton.addTarget(self, action: #selector(resetTapped), for: .touchUpInside)
 
-        let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.systemGreen.cgColor, UIColor.systemBlue.cgColor]
-        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
-        gradient.cornerRadius = 14
-        gradient.frame = CGRect(x: 0, y: 0, width: 240, height: 50)
-        nextHoleButton.layer.insertSublayer(gradient, at: 0)
+        nextHoleButton.layer.insertSublayer(createGradientLayer(firstColor: UIColor.systemGreen), at: 0)
+        resetButton.layer.insertSublayer(createGradientLayer(firstColor: UIColor.systemRed), at: 0)
 
         // STACK: PICKER + "strokes"
         let pickerStack = UIStackView(arrangedSubviews: [pickerView, strokesLabel])
@@ -66,7 +69,7 @@ public class SkinsCounterViewController: UIViewController, UIPickerViewDataSourc
         pickerStack.distribution = .fill
 
         // MAIN STACK
-        let mainStack = UIStackView(arrangedSubviews: [holeLabel, pickerStack, skinsLabel, nextHoleButton])
+        let mainStack = UIStackView(arrangedSubviews: [holeLabel, pickerStack, skinsLabel, nextHoleButton, resetButton])
         mainStack.axis = .vertical
         mainStack.spacing = 32
         mainStack.alignment = .center
@@ -82,8 +85,33 @@ public class SkinsCounterViewController: UIViewController, UIPickerViewDataSourc
             pickerView.heightAnchor.constraint(equalToConstant: 150),
 
             nextHoleButton.widthAnchor.constraint(equalToConstant: 240),
-            nextHoleButton.heightAnchor.constraint(equalToConstant: 50)
+            nextHoleButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            resetButton.widthAnchor.constraint(equalToConstant: 240),
+            resetButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    private func createGradientLayer(firstColor: UIColor) -> CAGradientLayer {
+        let gradient = CAGradientLayer()
+        gradient.colors = [firstColor.cgColor, UIColor.systemBlue.cgColor]
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
+        gradient.cornerRadius = 14
+        gradient.frame = CGRect(x: 0, y: 0, width: 240, height: 50)
+        return gradient
+    }
+    
+    private func showNewValues() {
+        pickerView.selectRow(0, inComponent: 0, animated: true)
+
+        UIView.transition(with: holeLabel, duration: 0.3, options: .transitionCrossDissolve) { [weak self] in
+            self?.holeLabel.text = "Hole \(self?.handler?.skinsCounterViewHandlerHoleNumber ?? 0)"
+        }
+
+        UIView.transition(with: skinsLabel, duration: 0.3, options: .transitionCrossDissolve) { [weak self] in
+            self?.skinsLabel.text = "Skins: \(self?.handler?.skinsCounterViewHandlerSkinsCount ?? 0)"
+        }
     }
 
     // MARK: - Picker View
@@ -108,15 +136,11 @@ public class SkinsCounterViewController: UIViewController, UIPickerViewDataSourc
 
     @objc private func nextHoleTapped() {
         handler?.skinsCounterViewHandlerOnNextHoleTapped()
-
-        pickerView.selectRow(0, inComponent: 0, animated: true)
-
-        UIView.transition(with: holeLabel, duration: 0.3, options: .transitionCrossDissolve) { [weak self] in
-            self?.holeLabel.text = "Hole \(self?.handler?.skinsCounterViewHandlerHoleNumber ?? 0)"
-        }
-
-        UIView.transition(with: skinsLabel, duration: 0.3, options: .transitionCrossDissolve) { [weak self] in
-            self?.skinsLabel.text = "Skins: \(self?.handler?.skinsCounterViewHandlerSkinsCount ?? 0)"
-        }
+        showNewValues()
+    }
+    
+    @objc private func resetTapped() {
+        handler?.skinsCounterViewHandlerOnResetTapped()
+        showNewValues()
     }
 }
